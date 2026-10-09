@@ -1,0 +1,25 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import SiteHeader from '../components/SiteHeader.astro';
+import HomePage from '../components/HomePage.astro';
+import ShopPage from '../components/ShopPage.astro';
+import SiteFooter from '../components/SiteFooter.astro';
+import CartDrawer from '../components/CartDrawer.astro';
+import Lightbox from '../components/Lightbox.astro';
+import Toast from '../components/Toast.astro';
+---
+<BaseLayout>
+  <div class="wipe" id="wipe"><i></i><i></i><i></i><i></i></div>
+  <SiteHeader />
+  <main>
+    <HomePage />
+    <ShopPage />
+  </main>
+  <SiteFooter />
+  <CartDrawer />
+  <Lightbox />
+  <Toast />
+</BaseLayout>
+<script>
+  import '../scripts/site.js';
+</script>
