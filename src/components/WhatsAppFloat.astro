@@ -1,0 +1,18 @@
+---
+const message = encodeURIComponent('Hola Cris, tengo una pregunta sobre tus productos y obras. ¿Me puedes dar más información?');
+const href = `https://wa.me/525543583381?text=${message}`;
+---
+<a
+  class="whatsapp-float"
+  href={href}
+  target="_blank"
+  rel="noopener noreferrer"
+  aria-label="Preguntar por WhatsApp"
+  title="Preguntar por WhatsApp"
+>
+  <svg viewBox="0 0 32 32" aria-hidden="true" focusable="false">
+    <path d="M16 3.2a12.4 12.4 0 0 0-10.5 19L4 28l6-1.5A12.5 12.5 0 1 0 16 3.2Z" fill="none" stroke="currentColor" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round" />
+    <path d="m12.6 10.5-1.5.8c-.7.4-1 1.2-.8 2.1 1 3.9 4.2 7.1 8.1 8 .8.2 1.5-.2 1.9-.9l.8-1.5c.2-.5 0-1-.5-1.2l-2-1c-.5-.2-.9-.1-1.2.3l-.7.9a10.7 10.7 0 0 1-2.8-2.8l.9-.7c.4-.3.5-.8.3-1.2l-1-2.1c-.3-.5-.9-.7-1.5-.5Z" fill="currentColor" />
+  </svg>
+  <span class="whatsapp-float__hint" aria-hidden="true">¿Tienes una pregunta?</span>
+</a>
