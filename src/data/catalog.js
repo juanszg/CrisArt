@@ -20,15 +20,6 @@ export const PRODUCTS=[
  {id:17,n:'Kit del taller de catrinas',c:'Taller',p:600,d:'Materiales de las 4 clases para hacer tu catrina de 53 cm.',img:'cat',bg:'#f6c20f'}
 ];
 
-export const EVENTS=[
- {d:'24',m:'Oct',n:'Bazar de Día de Muertos',w:'Plaza artesanal, Atizapán de Zaragoza',t:'bazar'},
- {d:'31',m:'Oct',n:'Expo de catrinas y ofrendas',w:'Casa de cultura, Naucalpan',t:'expo'},
- {d:'14',m:'Nov',n:'Bazar de arte hecho a mano',w:'Foro cultural, Satélite',t:'bazar'},
- {d:'05',m:'Dic',n:'Bazar navideño de artesanos',w:'Parque central, Tlalnepantla',t:'bazar'},
- {d:'12',m:'Dic',n:'Expo de dioramas y miniaturas',w:'Centro de convenciones, CDMX',t:'expo'},
- {d:'Cada',m:'miércoles y sábado',n:'Taller de catrinas',w:'Kaffee Top, Viveros de Atizapán',t:'taller'}
-];
-
 export const GAL=[
 ['ColeccionCatrinas','Colección de catrinas','Catrinas'],['CatrinaAzul','Catrina azul de girasoles','Catrinas'],['catrina-blanco','Catrina blanca de gala','Catrinas'],['CatrinaNegro2','Catrina de sombrero negro','Catrinas'],['CartinaNegro','Catrina de calabazas','Catrinas'],['Catrina2','Catrina de sombrero florido','Catrinas'],['CatrinaFrida','Catrina Frida','Catrinas'],['Catrina','Catrina de flores doradas','Catrinas'],['Catrinaespecial','Catrina especial de flores','Catrinas'],['CAtrinaRosa','Catrina rosa','Catrinas'],['CatrinaLuz','Catrina de luces','Catrinas'],['Frida','Frida de blusa bordada','Catrinas'],['Frida2','Frida de rebozo','Catrinas'],
 ['Calaca6','Calaca del loro','Calacas'],['calaca3','Calaca de listones azules','Calacas'],['Calaca5','Calaca con jarrón','Calacas'],['Calaca4','Calaca de rebozo naranja','Calacas'],['Calaca','Calaca morada','Calacas'],['CalacaEspecial','Calaca de trenzas','Calacas'],['CalacaEspecial3','Calaca en su altar','Calacas'],['Claca2','Calaca de rebozo','Calacas'],

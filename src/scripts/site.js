@@ -1,4 +1,4 @@
-import { PRODUCTS, EVENTS, GAL } from '../data/catalog.js';
+import { PRODUCTS, GAL } from '../data/catalog.js';
 import { PH } from '../data/product-images.js';
 const IMG={"cat":"/img/cat.jpg","afi":"/img/afi.jpg"};
 document.querySelectorAll('[data-img]').forEach((image) => { image.src = IMG[image.dataset.img]; });
@@ -43,12 +43,18 @@ const gcats=['Todo',...new Set(GAL.map(g=>g[2]))];
 $('#gchips').innerHTML=gcats.map(c=>`<button class="${c===gf?'on':''}">${c}</button>`).join('');
 $('#gchips').onclick=e=>{const b=e.target.closest('button');if(!b)return;gf=b.textContent;[...$('#gchips').children].forEach(x=>x.classList.toggle('on',x===b));renderGal()};
 function renderGal(){list=GAL.filter(g=>gf==='Todo'||g[2]===gf);$('#gal').innerHTML=list.map((g,i)=>`<button data-i="${i}" aria-label="${g[1]}"><img loading="lazy" src="${PH[g[0]]}" alt="${g[1]}"><span>${g[1]}</span></button>`).join('')}
-function show(i){li=(i+list.length)%list.length;const g=list[li];$('#lbc').innerHTML=`<img src="${PH[g[0]]}" alt="${g[1]}"><p><b>${g[1]}</b>${g[2]} · ${li+1} de ${list.length}</p>`;$('#lb').classList.add('on')}
-$('#gal').onclick=e=>{const b=e.target.closest('button');if(b)show(+b.dataset.i)};
-const closeLb=()=>$('#lb').classList.remove('on');
+let lightboxFocus=null;
+function openLightbox(){if($('#lb').classList.contains('on'))return;lightboxFocus=document.activeElement;$('#lb').classList.add('on');$('#lb').setAttribute('aria-hidden','false');document.body.classList.add('lightbox-open');$('#lclose').focus()}
+function show(i){if(!list.length)return;li=(i+list.length)%list.length;const g=list[li],src=PH[g[0]]||g[0];$('#lbc').innerHTML=`<img src="${src}" alt="${g[1]}"><p><b>${g[1]}</b>${g[2]} · ${li+1} de ${list.length}</p>`;openLightbox()}
+const recentWorks=[...document.querySelectorAll('#obra [data-recent-index]')].map(el=>{const img=el.querySelector('img'),title=el.querySelector('figcaption strong')?.textContent.trim()||img.alt;return[img.getAttribute('src'),title,'Obra reciente']});
+function showRecent(index){list=recentWorks;show(index)}
+$('#obra').addEventListener('click',e=>{const item=e.target.closest('[data-recent-index]');if(item)showRecent(+item.dataset.recentIndex)});
+$('#obra').addEventListener('keydown',e=>{const item=e.target.closest('[data-recent-index]');if(item&&(e.key==='Enter'||e.key===' ')){e.preventDefault();showRecent(+item.dataset.recentIndex)}});
+$('#gal').onclick=e=>{const b=e.target.closest('button');if(b){list=GAL.filter(g=>gf==='Todo'||g[2]===gf);show(+b.dataset.i)}};
+const closeLb=()=>{if(!$('#lb').classList.contains('on'))return;$('#lb').classList.remove('on');$('#lb').setAttribute('aria-hidden','true');document.body.classList.remove('lightbox-open');lightboxFocus?.focus?.();lightboxFocus=null};
 $('#lb').onclick=e=>{if(e.target.id==='lb')closeLb()};
 $('#lclose').onclick=closeLb;$('#lprev').onclick=()=>show(li-1);$('#lnext').onclick=()=>show(li+1);
-addEventListener('keydown',e=>{if(!$('#lb').classList.contains('on'))return;if(e.key==='ArrowLeft')show(li-1);if(e.key==='ArrowRight')show(li+1)});
+addEventListener('keydown',e=>{if(!$('#lb').classList.contains('on'))return;if(e.key==='ArrowLeft')show(li-1);if(e.key==='ArrowRight')show(li+1);if(e.key==='Escape')closeLb();if(e.key==='Tab'){const controls=[...$('#lb').querySelectorAll('button')],first=controls[0],last=controls.at(-1);if(e.shiftKey&&document.activeElement===first){e.preventDefault();last.focus()}else if(!e.shiftKey&&document.activeElement===last){e.preventDefault();first.focus()}}});
 renderGal();
 document.querySelectorAll('[data-ph]').forEach(i=>i.src=PH[i.dataset.ph]);
 
@@ -64,11 +70,10 @@ function draw(){const ids=Object.keys(cart).filter(i=>cart[i]>0);let t=0,n=0,msg
 $('#items').onclick=e=>{const m=e.target.dataset.m,p=e.target.dataset.p;if(m)cart[m]--;if(p)cart[p]++;if(m||p)draw()};
 const openCart=()=>{$('#cart').classList.add('on');$('#dim').classList.add('on')},closeCart=()=>{$('#cart').classList.remove('on');$('#dim').classList.remove('on')};
 $('#cartBtn').onclick=openCart;$('#cx').onclick=closeCart;$('#dim').onclick=closeCart;
-addEventListener('keydown',e=>{if(e.key==='Escape'){closeCart();$('#lb').classList.remove('on')}});
+addEventListener('keydown',e=>{if(e.key==='Escape')closeCart()});
 let tt;function toast(m){const t=$('#toast');t.textContent=m;t.classList.add('on');clearTimeout(tt);tt=setTimeout(()=>t.classList.remove('on'),2200)}
 
 /* ---- eventos, marquesina, reveal, parallax ---- */
-$('#events').innerHTML=EVENTS.map(e=>`<li><div class="dt">${e.d}<small>${e.m}</small></div><div><h3>${e.n}</h3><p>${e.w}</p></div><span class="tag ${e.t}">${{bazar:'Bazar',expo:'Expo',taller:'Taller'}[e.t]}</span></li>`).join('');
 const words=['Catrinas','Papel maché','Porcelana fría','Talavera','Hecho a mano','Ofrenda'];
 $('#mq').innerHTML=[...words,...words].map(w=>`<span>${w}</span><span>●</span><span>▲</span>`).join('');
 $('#mq').innerHTML+=$('#mq').innerHTML;
