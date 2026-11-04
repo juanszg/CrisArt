@@ -3,6 +3,7 @@ import BaseLayout from '../layouts/BaseLayout.astro';
 import SiteHeader from '../components/SiteHeader.astro';
 import HomePage from '../components/HomePage.astro';
 import ShopPage from '../components/ShopPage.astro';
+import GallerySection from '../components/GallerySection.astro';
 import SiteFooter from '../components/SiteFooter.astro';
 import CartDrawer from '../components/CartDrawer.astro';
 import Lightbox from '../components/Lightbox.astro';
@@ -15,6 +16,7 @@ import WhatsAppFloat from '../components/WhatsAppFloat.astro';
   <main>
     <HomePage />
     <ShopPage />
+    <div class="view" id="v-art"><GallerySection /></div>
   </main>
   <SiteFooter />
   <CartDrawer />

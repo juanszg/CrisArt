@@ -2,9 +2,11 @@
 ---
 <header>
   <a class="logo" href="#inicio" data-go="home"><span class="mark"><i></i><i></i><i></i></span>Cris Art</a>
-  <nav aria-label="Principal">
+  <button id="menuToggle" class="menu-toggle" type="button" aria-label="Abrir menú" aria-expanded="false" aria-controls="primaryNav"><span></span><span></span><span></span></button>
+  <nav id="primaryNav" aria-label="Principal">
     <button data-go="home" class="on">Inicio</button>
     <button data-go="shop">Tienda y arte</button>
+    <button data-go="art">Toda su arte</button>
   </nav>
   <button id="cartBtn" type="button" aria-label="Abrir carrito de compras">
     <svg class="cart-icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false">

@@ -5,6 +5,10 @@
   <div class="wrap">
     <div class="shop-heading"><h2>Tienda</h2><aside class="shop-sticky">Se necesita un 50% de anticipo para cada pedido</aside></div>
     <div class="shop-filters" aria-label="Filtros de tienda">
+      <button id="productColumns" class="mobile-columns-toggle" type="button" aria-pressed="false">Ver 2 columnas</button>
+      <label class="shop-search">Buscar
+        <input id="productSearch" type="search" placeholder="Nombre o número" aria-label="Buscar productos por nombre o número" autocomplete="off" />
+      </label>
       <label>Precio
         <select id="priceFilter" aria-label="Filtrar por precio"><option value="all">Todos los precios</option><option value="under-1000">Menos de $1,000</option><option value="1000-1999">$1,000–$1,999</option><option value="2000-2999">$2,000–$2,999</option><option value="3000-plus">$3,000 o más</option></select>
       </label>
