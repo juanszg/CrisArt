@@ -11,7 +11,7 @@ export const PRODUCTS=[
  {id:8,n:'Calaca de rebozo',c:'Calacas',p:1500,d:'Trenzas largas y rebozo de rayas.',f:'Claca2'},
  {id:9,n:'Espantapájaros del maizal',c:'Halloween',p:1700,d:'Cabeza de calabaza, cuervo y base con calabazas.',f:'Espantapajaros4'},
  {id:10,n:'Jack en el cementerio',c:'Halloween',p:1600,d:'Esqueleto sobre su reja con calabaza.',f:'Jack2'},
- {id:11,n:'Bruja del girasol',c:'Halloween',p:1200,d:'Cabello rojo, vela en mano y sombrero con girasol.',f:'bruja1'},
+ {id:11,n:'Bruja roja',c:'Halloween',p:400,size:'25 cm',d:'25 cm de alto.',f:'bruja1'},
  {id:12,n:'Cascanueces',c:'Navidad',p:1100,d:'Uniforme con detalles dorados.',f:'Soladdo'},
  {id:13,n:'Grinch navideño',c:'Navidad',p:900,d:'Con su gorro y su regalo.',f:'Grinch'},
  {id:14,n:'Reno de luces',c:'Navidad',p:950,d:'Cornamenta iluminada para tu árbol o repisa.',f:'Reno'},
@@ -31,3 +31,20 @@ export const GAL=[
 
 PRODUCTS.push(...NEW_PRODUCTS);
 GAL.push(...NEW_GALLERY);
+
+// Los precios de la lista corresponden a catrinas; el #17 es la bruja de Halloween.
+const catrinaPrices = [1500,1500,1600,1500,1500,1700,1500,1500,1500,1700,1700,1700,1700,1700,600,600,1500,1700,1800];
+const catrinas = PRODUCTS.filter((product) => product.c === 'Catrinas');
+catrinas.slice(0, catrinaPrices.length).forEach((product, index) => {
+  product.p = catrinaPrices[index];
+  product.size = index === 14 || index === 15 ? '30 cm' : '57 cm';
+});
+const witch = PRODUCTS.find((product) => product.n === 'Bruja con rebozo');
+if (witch) { witch.c = 'Halloween'; witch.p = 400; witch.size = '25 cm'; }
+PRODUCTS.forEach((product) => {
+  if (product.c === 'Catrinas' && product.d.includes('Técnica mixta.')) {
+    product.d = product.d.split(' Técnica mixta.')[0];
+  }
+});
+const product40 = PRODUCTS.find((product) => product.id === 40);
+if (product40) product40.c = 'Halloween';

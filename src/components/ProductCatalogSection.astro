@@ -1,7 +1,20 @@
 ---
 ---
-<section id="tienda"><div class="wrap">
-    <h2>Tienda</h2>
+<section id="tienda">
+  <div class="shop-announcement" aria-label="Características de las piezas"><span id="shopAnnouncementText" class="announcement-color-0">Técnica mixta</span></div>
+  <div class="wrap">
+    <div class="shop-heading"><h2>Tienda</h2><aside class="shop-sticky">Se necesita un 50% de anticipo para cada pedido</aside></div>
+    <div class="shop-filters" aria-label="Filtros de tienda">
+      <label>Precio
+        <select id="priceFilter" aria-label="Filtrar por precio"><option value="all">Todos los precios</option><option value="under-1000">Menos de $1,000</option><option value="1000-1999">$1,000–$1,999</option><option value="2000-2999">$2,000–$2,999</option><option value="3000-plus">$3,000 o más</option></select>
+      </label>
+      <label>Tamaño
+        <select id="sizeFilter" aria-label="Filtrar por tamaño"><option value="all">Todos los tamaños</option><option value="25 cm">25 cm</option><option value="30 cm">30 cm</option><option value="57 cm">57 cm</option></select>
+      </label>
+    </div>
     <div class="chips" id="chips"></div>
     <div class="grid" id="grid"></div>
+    <div class="shop-alert" id="shopAlert" role="dialog" aria-modal="true" aria-labelledby="shopAlertTitle" aria-hidden="true">
+      <div class="shop-alert__card"><span class="shop-alert__flower" aria-hidden="true">✿</span><h3 id="shopAlertTitle">Antes de hacer tu pedido</h3><p>Recuerda hacer tu pedido con 1 mes de anticipación.</p><button id="shopAlertClose" type="button">Entendido</button></div>
+    </div>
   </div></section>

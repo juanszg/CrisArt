@@ -18,12 +18,12 @@ function art(seed,bg){const r=rnd(seed*97+3),pick=()=>C[Math.floor(r()*4)];let b
 const thumb=(o)=>o.f?`<img loading="lazy" src="${PH[o.f]}" alt="${o.n}">`:o.img?`<div style="background:${o.bg};display:grid;place-items:center"><img src="${IMG[o.img]}" alt="" style="mix-blend-mode:multiply;object-fit:contain"></div>`:art(o.s,o.bg);
 
 /* ---- navegación con transición ---- */
-const wipe=$('#wipe');let cur='home',busy=false;
+const wipe=$('#wipe');let cur='home',busy=false,shopAlertShown=false;
 function go(v,to){
  if(busy)return;busy=true;closeCart();
  const swap=()=>{document.querySelectorAll('.view').forEach(e=>e.classList.toggle('on',e.id==='v-'+v));
   document.querySelectorAll('nav button').forEach(b=>b.classList.toggle('on',b.dataset.go===v));cur=v;
-  scrollTo(0,0);if(v==='shop')renderGrid();observe();setTimeout(observe,100);if(to)setTimeout(()=>document.getElementById(to)?.scrollIntoView(),50)};
+  scrollTo(0,0);if(v==='shop'){renderGrid();if(!shopAlertShown){showShopAlert();shopAlertShown=true}}observe();setTimeout(observe,100);if(to)setTimeout(()=>document.getElementById(to)?.scrollIntoView(),50)};
  if(v===cur){busy=false;if(to)document.getElementById(to)?.scrollIntoView({behavior:'smooth'});return}
  wipe.classList.remove('out');wipe.classList.add('in');
  setTimeout(()=>{swap();wipe.classList.add('out');wipe.classList.remove('in')},780);
@@ -36,7 +36,12 @@ let filter='Todo';
 const cats=['Todo',...new Set(PRODUCTS.map(p=>p.c))];
 $('#chips').innerHTML=cats.map(c=>`<button class="${c===filter?'on':''}">${c}</button>`).join('');
 $('#chips').onclick=e=>{const b=e.target.closest('button');if(!b)return;filter=b.textContent;[...$('#chips').children].forEach(x=>x.classList.toggle('on',x===b));renderGrid()};
-function renderGrid(){$('#grid').innerHTML=PRODUCTS.filter(p=>filter==='Todo'||p.c===filter).map((p,i)=>`<article class="card" style="animation-delay:${i*70}ms"><div class="im">${thumb(p)}</div>${p.photos?.length>1?`<button class="views" data-views="${p.id}">Ver ${p.photos.length} fotos</button>`:""}<div class="tx"><h3>${p.n}</h3><p>${p.d}</p><div class="pr"><b>${money(p.p)}</b><button class="add" data-id="${p.id}">Agregar</button></div></div></article>`).join('')}
+$('#priceFilter').onchange=renderGrid;$('#sizeFilter').onchange=renderGrid;
+function renderGrid(){const price=$('#priceFilter').value,size=$('#sizeFilter').value;const shown=PRODUCTS.filter(p=>(filter==='Todo'||p.c===filter)&&(size==='all'||p.size===size)&&(price==='all'||price==='under-1000'&&p.p<1000||price==='1000-1999'&&p.p>=1000&&p.p<2000||price==='2000-2999'&&p.p>=2000&&p.p<3000||price==='3000-plus'&&p.p>=3000));$('#grid').innerHTML=shown.map((p,i)=>`<article class="card" style="animation-delay:${i*70}ms"><div class="im">${thumb(p)}</div>${p.photos?.length>1?`<button class="views" data-views="${p.id}">Ver ${p.photos.length} fotos</button>`:""}<div class="tx"><span class="product-number">${String(PRODUCTS.indexOf(p)+1).padStart(2,'0')}</span><h3>${p.n}</h3><p>${p.d}</p><div class="pr"><b>${money(p.p)}</b><button class="add" data-id="${p.id}">Agregar</button></div></div></article>`).join('')}
+function showShopAlert(){const alert=$('#shopAlert');alert.classList.add('on');alert.setAttribute('aria-hidden','false');$('#shopAlertClose').focus()}
+const announcements=['Técnica mixta','100 % elaborado a mano','Piezas únicas hechas con cariño','Pedidos con un mes de anticipación','Muchas gracias por tu apoyo ❤️'];let announcementIndex=0;setInterval(()=>{const el=$('#shopAnnouncementText');if(!el)return;announcementIndex=(announcementIndex+1)%announcements.length;el.classList.add('changing');setTimeout(()=>{el.textContent=announcements[announcementIndex];el.className=`announcement-color-${announcementIndex}`;el.classList.remove('changing')},250)},3200);
+function closeShopAlert(){const alert=$('#shopAlert');alert.classList.remove('on');alert.setAttribute('aria-hidden','true')}
+$('#shopAlertClose').onclick=closeShopAlert;$('#shopAlert').onclick=e=>{if(e.target.id==='shopAlert')closeShopAlert()};
 $('#grid').onclick=e=>{const view=e.target.closest('[data-views]');if(view){const p=PRODUCTS.find(item=>item.id===+view.dataset.views);list=p.photos.map(key=>[key,p.n,p.c]);show(0);return}const b=e.target.closest('.add');if(b)add(+b.dataset.id)};
 let gf='Todo',list=[],li=0;
 const gcats=['Todo',...new Set(GAL.map(g=>g[2]))];
